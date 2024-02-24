@@ -1,0 +1,63 @@
+{
+  "name": "@aulidev/cron",
+  "version": "0.0.0",
+  "description": "A simple cron wrapper for nodejs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "release": "pnpm run build && changesets publish"
+  },
+  "keywords": [
+    "cron",
+    "nodejs",
+    "schedule",
+    "schedular",
+    "job",
+    "task",
+    "timer",
+    "crontab"
+  ],
+  "author": "Sumanta Kabiraj <sumantablog@gmail.com>",
+  "contributors": [
+    {
+      "name": "Sumanta Kabiraj",
+      "email": "sumantablog@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/aulidev/cron.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aulidev/cron/issues"
+  },
+  "homepage": "https://github.com/aulidev/cron#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@types/node": "^20.11.20",
+    "@types/node-cron": "^3.0.11",
+    "@types/uuid": "^9.0.8",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "uuid": "^9.0.1"
+  }
+}
