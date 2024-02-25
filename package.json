@@ -24,9 +24,7 @@
     "coverage": "vitest run --coverage",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
     "changeset": "changeset",
-    "publish": "changeset publish",
-    "version": "changeset version",
-    "release": "pnpm run build && pnpm version && pnpm publish"
+    "release": "pnpm run build &&  changeset publish"
   },
   "publishConfig": {
     "access": "public"
