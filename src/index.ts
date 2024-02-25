@@ -31,12 +31,4 @@ function generateMethod(unit: CronUnit, interval: number) {
   };
 }
 
-cron.every(1).second.do(() => {}, {});
-cron.every(1).minute.do(() => {}, {});
-cron.every(1).hour.do(() => {}, {});
-cron.every(1).day.do(() => {}, {});
-cron.every(1).week.do(() => {}, {});
-cron.every(1).month.do(() => {}, {});
-cron.every(1).year.do(() => {}, {});
-
 export default cron;
