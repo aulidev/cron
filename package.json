@@ -19,11 +19,14 @@
   },
   "scripts": {
     "build": "tsup",
-    "release": "pnpm run build && pnpm changesets publish",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts"
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts",
+    "changeset": "changeset",
+    "publish": "changeset publish",
+    "version": "changeset version",
+    "release": "pnpm run build && pnpm version && pnpm publish"
   },
   "publishConfig": {
     "access": "public"
