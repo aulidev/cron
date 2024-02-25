@@ -1,22 +1,14 @@
-import { schedule, type ScheduleOptions, type ScheduledTask } from "node-cron";
+import { schedule, type ScheduleOptions, type ScheduledTask } from 'node-cron'
 
-type CronFunction = ((now: Date | "manual" | "init") => void) | string;
+type CronFunction = ((now: Date | 'manual' | 'init') => void) | string
 
-type CronUnit =
-  | "second"
-  | "minute"
-  | "hour"
-  | "day"
-  | "week"
-  | "month"
-  | "year"
-  | string;
+type CronUnit = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'
 
 export type {
   ScheduleOptions as CronOptions,
   ScheduledTask as CronTask,
   CronFunction,
   CronUnit,
-};
+}
 
-export const cronSchedular = schedule;
+export const cronSchedular = schedule
