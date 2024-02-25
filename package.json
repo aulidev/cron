@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "release": "pnpm run build && changesets publish",
+    "release": "pnpm run build && pnpm changesets publish",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "test": "vitest",
     "coverage": "vitest run --coverage",
