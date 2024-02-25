@@ -23,7 +23,6 @@ const cron: Cron = {
 
 function generateMethod(unit: CronUnit, interval: number) {
   const methodName = `everyN${unit.charAt(0).toUpperCase() + unit.slice(1)}s`;
-  console.log(methodName);
   return {
     do(callback: CronFunction, option?: CronOptions): CronTask {
       return (Timer as any)[methodName](interval, callback, option);
