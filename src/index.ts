@@ -1,34 +1,42 @@
 import Timer from "@/timer";
-import { CallBackTypes, CronOptions, CronTask } from "@/lib";
-
-const createCronEvery = (unit: string) => ({
-  every: (n: number) => ({
-    do: (callback: CallBackTypes, option?: CronOptions): CronTask => {
-      return Timer[`everyN${unit}s` as keyof typeof Timer](n, callback, option);
-    },
-  }),
-});
+import { CronFunction, CronOptions, CronTask, CronUnit } from "@/lib";
 
 interface Cron {
-  second: {
-    every: (n: number) => {
-      do: (callback: CallBackTypes, option?: CronOptions) => CronTask;
-    };
-  };
-  minute: {
-    every: (n: number) => {
-      do: (callback: CallBackTypes, option?: CronOptions) => CronTask;
-    };
-  };
-  hour: {
-    every: (n: number) => {
-      do: (callback: CallBackTypes, option?: CronOptions) => CronTask;
+  every: (interval: number) => {
+    [unit: string]: {
+      do: (callback: CronFunction, option?: CronOptions) => CronTask;
     };
   };
 }
 
 const cron: Cron = {
-  second: createCronEvery("Second"),
-  minute: createCronEvery("Minute"),
-  hour: createCronEvery("Hour"),
+  every: (interval: number) => ({
+    second: generateMethod("second", interval),
+    minute: generateMethod("minute", interval),
+    hour: generateMethod("hour", interval),
+    day: generateMethod("day", interval),
+    week: generateMethod("week", interval),
+    month: generateMethod("month", interval),
+    year: generateMethod("year", interval),
+  }),
 };
+
+function generateMethod(unit: CronUnit, interval: number) {
+  const methodName = `everyN${unit.charAt(0).toUpperCase() + unit.slice(1)}s`;
+  console.log(methodName);
+  return {
+    do(callback: CronFunction, option?: CronOptions): CronTask {
+      return (Timer as any)[methodName](interval, callback, option);
+    },
+  };
+}
+
+cron.every(1).second.do(() => {}, {});
+cron.every(1).minute.do(() => {}, {});
+cron.every(1).hour.do(() => {}, {});
+cron.every(1).day.do(() => {}, {});
+cron.every(1).week.do(() => {}, {});
+cron.every(1).month.do(() => {}, {});
+cron.every(1).year.do(() => {}, {});
+
+export default cron;
