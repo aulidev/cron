@@ -1,6 +1,6 @@
 {
   "name": "@aulidev/cron",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple cron wrapper for nodejs",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
