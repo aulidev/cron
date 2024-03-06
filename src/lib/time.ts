@@ -3,7 +3,28 @@
  * @param time - The time string in the format "HH:MM:SS AM/PM".
  * @returns The time in seconds.
  */
-export function convertTimeToSeconds(time: string): number {
+// export function convertTimeToSeconds(time: string): number {
+//   const [timeStr, amPm] = time.split(' ')
+//   const [hourStr, minuteStr, secondStr] = timeStr.split(':')
+//   let hour = parseInt(hourStr, 10)
+//   const minute = minuteStr ? parseInt(minuteStr, 10) : 0
+//   const second = secondStr ? parseInt(secondStr, 10) : 0
+
+//   if (amPm) {
+//     if (amPm.toLowerCase() === 'pm' && hour < 12) {
+//       hour += 12
+//     } else if (amPm.toLowerCase() === 'am' && hour === 12) {
+//       hour = 0
+//     }
+//   }
+//   return hour * 3600 + minute * 60 + second
+// }
+
+export function getHoursMinutesSeconds(time: string): {
+  hour: number
+  minute: number
+  second: number
+} {
   const [timeStr, amPm] = time.split(' ')
   const [hourStr, minuteStr, secondStr] = timeStr.split(':')
   let hour = parseInt(hourStr, 10)
@@ -17,7 +38,7 @@ export function convertTimeToSeconds(time: string): number {
       hour = 0
     }
   }
-  return hour * 3600 + minute * 60 + second
+  return { hour, minute, second }
 }
 
 /**

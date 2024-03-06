@@ -16,7 +16,6 @@ export type TimerType = {
     n: number,
     callback: CronFunction,
     option?: CronOptions,
-    dayOfWeek?: number,
   ) => CronTask
 }
 
@@ -78,14 +77,6 @@ const Timer: TimerType = {
     option?: CronOptions,
   ): CronTask => {
     return cronSchedular(`0 0 1 1 */${n}`, callback, option)
-  },
-  everyNWeeksAtDay: (
-    n: number,
-    callback: CronFunction,
-    option?: CronOptions,
-    dayOfWeek?: number,
-  ): CronTask => {
-    return cronSchedular(`0 0 */${n} * ${dayOfWeek}`, callback, option)
   },
 }
 

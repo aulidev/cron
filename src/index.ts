@@ -1,7 +1,12 @@
-import Timer from '@/timer'
-import { CronFunction, CronOptions, CronTask, CronUnit } from '@/lib'
+import {
+  CronFunction,
+  CronOptions,
+  CronTask,
+  CronUnit,
+  cronSchedular,
+} from '@/lib'
 import { generateEveryMethod } from '@/lib/every'
-import { convertDayToNumber, convertTimeToSeconds } from '@/lib/time'
+import { convertDayToNumber, getHoursMinutesSeconds } from '@/lib/time'
 
 /**
  * Represents a cron job configuration.
@@ -46,8 +51,9 @@ const cron: Cron = {
     runAt(time: string) {
       return {
         do(callback: CronFunction, option?: CronOptions): CronTask {
-          const interval = convertTimeToSeconds(time)
-          return Timer.everyNSeconds(interval, callback, option)
+          const { hour, minute, second } = getHoursMinutesSeconds(time)
+          const cronString = `${second === 0 ? '0' : second} ${minute === 0 ? '0' : minute} ${hour === 0 ? '*' : `*/${hour}`} * * *`
+          return cronSchedular(cronString, callback, option)
         },
       }
     },
@@ -58,14 +64,12 @@ const cron: Cron = {
         on(day: string) {
           return {
             do(callback: CronFunction, option?: CronOptions): CronTask {
-              const interval = convertTimeToSeconds(time)
+              const { hour, minute, second } = getHoursMinutesSeconds(time)
               const dayOfWeek = convertDayToNumber(day)
-
-              return Timer.everyNWeeksAtDay(
-                interval,
+              return cronSchedular(
+                `${second === 0 ? '0' : second} ${minute === 0 ? '0' : minute} ${hour === 0 ? '*' : `*/${hour}`} * * ${dayOfWeek}`,
                 callback,
                 option,
-                dayOfWeek,
               )
             },
           }
