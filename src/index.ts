@@ -1,27 +1,7 @@
 import Timer from '@/timer'
 import { CronFunction, CronOptions, CronTask, CronUnit } from '@/lib'
-
-/**
-Generates a method for executing a callback function at regular intervals.
-@param unit - The unit of time for the interval (e.g. 'second', 'minute', 'hour').
-@param interval - The interval duration in milliseconds.
-@returns An object with a 'do' method for executing the callback function.
-*/
-
-function generateEveryMethod(unit: CronUnit, interval: number) {
-  const methodName = `everyN${unit.charAt(0).toUpperCase() + unit.slice(1)}s`
-  return {
-    /**
-     * Executes the provided callback function at regular intervals.
-     * @param callback - The function to be executed.
-     * @param option - Optional configuration options for the cron task.
-     * @returns A cron task object.
-     */
-    do(callback: CronFunction, option?: CronOptions): CronTask {
-      return Timer[methodName](interval, callback, option)
-    },
-  }
-}
+import { generateEveryMethod } from '@/lib/every'
+import { convertDayToNumber, convertTimeToSeconds } from '@/lib/time'
 
 /**
  * Represents a cron job configuration.
@@ -30,6 +10,18 @@ type Cron = {
   every: (interval: number) => {
     [unit in CronUnit]: {
       do: (callback: CronFunction, option?: CronOptions) => CronTask
+    }
+  }
+  daily: {
+    runAt: (time: string) => {
+      do: (callback: CronFunction, option?: CronOptions) => CronTask
+    }
+  }
+  weekly: {
+    runAt: (time: string) => {
+      on: (day: string) => {
+        do: (callback: CronFunction, option?: CronOptions) => CronTask
+      }
     }
   }
 }
@@ -50,6 +42,37 @@ const cron: Cron = {
     month: generateEveryMethod('month', interval),
     year: generateEveryMethod('year', interval),
   }),
+  daily: {
+    runAt(time: string) {
+      return {
+        do(callback: CronFunction, option?: CronOptions): CronTask {
+          const interval = convertTimeToSeconds(time)
+          return Timer.everyNSeconds(interval, callback, option)
+        },
+      }
+    },
+  },
+  weekly: {
+    runAt(time: string) {
+      return {
+        on(day: string) {
+          return {
+            do(callback: CronFunction, option?: CronOptions): CronTask {
+              const interval = convertTimeToSeconds(time)
+              const dayOfWeek = convertDayToNumber(day)
+
+              return Timer.everyNWeeksAtDay(
+                interval,
+                callback,
+                option,
+                dayOfWeek,
+              )
+            },
+          }
+        },
+      }
+    },
+  },
 }
 
 export default cron

@@ -7,7 +7,6 @@ export type TimerType = {
   /**
    * Defines a timer function that takes a number, a callback function, and an optional CronOptions object as parameters,
    * and returns a CronTask object.
-   *
    * @param n - The number parameter.
    * @param callback - The callback function parameter.
    * @param option - The optional CronOptions parameter.
@@ -17,6 +16,7 @@ export type TimerType = {
     n: number,
     callback: CronFunction,
     option?: CronOptions,
+    dayOfWeek?: number,
   ) => CronTask
 }
 
@@ -78,6 +78,14 @@ const Timer: TimerType = {
     option?: CronOptions,
   ): CronTask => {
     return cronSchedular(`0 0 1 1 */${n}`, callback, option)
+  },
+  everyNWeeksAtDay: (
+    n: number,
+    callback: CronFunction,
+    option?: CronOptions,
+    dayOfWeek?: number,
+  ): CronTask => {
+    return cronSchedular(`0 0 */${n} * ${dayOfWeek}`, callback, option)
   },
 }
 

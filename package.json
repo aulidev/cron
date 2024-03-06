@@ -1,7 +1,7 @@
 {
   "name": "@aulidev/cron",
   "version": "1.0.0",
-  "description": "A simple cron wrapper for nodejs",
+  "description": "An easy-to-use interface for setting up cron jobs to execute tasks at a specific time using node-cron.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
