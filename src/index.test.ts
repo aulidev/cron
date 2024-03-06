@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
 import cron from '@/index'
-import { i } from 'vitest/dist/reporters-MmQN-57K'
 
 describe('Cron Scheudle Test ', () => {
   describe('Should be defined', () => {
